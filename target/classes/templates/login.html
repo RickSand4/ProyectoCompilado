@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #e9ecef;
+        }
+        .login-box {
+            width: 400px;
+            margin: 100px auto;
+        }
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .login-logo {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .login-logo span {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <div class="login-logo">
+        Upiiz <span>IPN</span>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <p class="text-center">Inicia sesión para comenzar</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="usuario" placeholder="Usuario" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $('#loginForm').submit(function(e) {
+        e.preventDefault();
+        const datos = $(this).serialize();
+        $.post('/validar', datos, function(respuesta) {
+            if (respuesta === 'ok') {
+                window.location.href = '/inicio';
+            } else {
+                alert('Credenciales incorrectas');
+            }
+        }).fail(function() {
+            alert('Error al conectar con el servidor');
+        });
+    });
+</script>
+</body>
+</html>
